@@ -5,15 +5,14 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Badge from '@material-ui/core/Badge';
+import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Tweet from './Tweet';
 
 const useStyles = makeStyles(theme => ({
     root: {
-        display: 'flex',
         justifyContent: 'center',
         padding: theme.spacing(2, 2),
-        margin: '8px'
     },
 
     list: {
@@ -45,26 +44,30 @@ const useStyles = makeStyles(theme => ({
 const TweetsDashboard = () => {
     const classes = useStyles();
     return (
-        <div className={classes.root}>
+
+        <Grid container spacing={3} className={classes.root}>
             {['@RainAgency', '@VersaAgency', '@alexadevs'].map(e => {
                 return (
-                    <Paper className={classes.account}>
-                        <List className={classes.list} subheader={<li />}>
-                            <ListSubheader className={classes.subHeader}>
-                                <Badge color="primary" badgeContent={30} className={classes.margin}>
-                                    <Typography variant="h6" className={classes.padding}>{e}</Typography>
-                                </Badge>
-                            </ListSubheader>
-                            {[...Array(30).keys()].map(item => (
-                                <ListItem key={`item-${item}`} className={classes.listItem}>
-                                    <Tweet />
-                                </ListItem>
-                            ))}
-                        </List>
-                    </Paper>
+                    <Grid item xs className={classes.account}>
+                        <Paper>
+                            <List className={classes.list} subheader={<li />}>
+                                <ListSubheader className={classes.subHeader}>
+                                    <Badge color="primary" badgeContent={30} className={classes.margin}>
+                                        <Typography variant="h6" className={classes.padding}>{e}</Typography>
+                                    </Badge>
+                                </ListSubheader>
+                                {[...Array(30).keys()].map(item => (
+                                    <ListItem key={`item-${item}`} className={classes.listItem}>
+                                        <Tweet />
+                                    </ListItem>
+                                ))}
+                            </List>
+                        </Paper>
+                    </Grid>
                 )
             })}
-        </div>
+        </Grid>
+
     );
 };
 
