@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     },
 
     list: {
-        minWidth: 450,
+        minWidth: 320,
         backgroundColor: theme.palette.background.paper,
         position: 'relative',
         overflow: 'auto',
@@ -37,6 +37,7 @@ const useStyles = makeStyles(theme => ({
     account: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
+        maxWidth: 500
     }
 }));
 
