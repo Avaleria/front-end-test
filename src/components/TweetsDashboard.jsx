@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
@@ -42,24 +43,23 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const TweetsDashboard = () => {
+const TweetsDashboard = ({ tweets }) => {    
     const classes = useStyles();
     return (
-
         <Grid container spacing={3} className={classes.root}>
-            {['@RainAgency', '@VersaAgency', '@alexadevs'].map(e => {
+            {tweets.map(account => {
                 return (
-                    <Grid item xs className={classes.account}>
+                    <Grid item xs className={classes.account} key={account.name}>
                         <Paper>
                             <List className={classes.list} subheader={<li />}>
                                 <ListSubheader className={classes.subHeader}>
-                                    <Badge color="primary" badgeContent={30} className={classes.margin}>
-                                        <Typography variant="h6" className={classes.padding}>{e}</Typography>
+                                    <Badge color="primary" badgeContent={account.tweets.length} className={classes.margin}>
+                                        <Typography variant="h6" className={classes.padding}>{account.name}</Typography>
                                     </Badge>
                                 </ListSubheader>
-                                {[...Array(30).keys()].map(item => (
-                                    <ListItem key={`item-${item}`} className={classes.listItem}>
-                                        <Tweet />
+                                {account.tweets.map(item => (
+                                    <ListItem key={`item-${item.id}`} className={classes.listItem}>
+                                        <Tweet content={item} />
                                     </ListItem>
                                 ))}
                             </List>
@@ -68,8 +68,11 @@ const TweetsDashboard = () => {
                 )
             })}
         </Grid>
-
     );
+};
+
+TweetsDashboard.propTypes = {
+    tweets: PropTypes.array
 };
 
 export default TweetsDashboard;
