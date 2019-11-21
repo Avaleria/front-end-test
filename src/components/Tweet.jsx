@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Moment from 'react-moment';
 import Chip from '@material-ui/core/Chip';
+import uuidv1 from 'uuid/v1';
 
 Moment.globalFormat = 'YYYY/MM/DD - hh:mm a';
 
@@ -38,7 +39,7 @@ const useStyles = makeStyles({
 const Tweet = ({ content }) => {
     const classes = useStyles();
 
-    const goTo = tweet => () => {        
+    const goTo = tweet => () => {
         if (tweet.entities.urls.length) {
             window.open(tweet.entities.urls[0].url, '_blank');
         }
@@ -62,7 +63,7 @@ const Tweet = ({ content }) => {
                     </Typography>
                     {content.entities.user_mentions.length ?
                         <div className={classes.chipContainer}>
-                            {content.entities.user_mentions.map(um => <Chip label={um.name} key={um.id} variant="outlined" />)}
+                            {content.entities.user_mentions.map(um => <Chip label={um.name} key={um.id + uuidv1()} variant="outlined" />)}
                         </div>
                         : <div></div>
                     }

@@ -10,7 +10,8 @@
     "react-dom": "^16.12.0",
     "react-moment": "^0.9.6",
     "react-scripts": "3.2.0",
-    "twitter-proxy": "^2.0.0"
+    "twitter-proxy": "^2.0.0",
+    "uuid": "^3.3.3"
   },
   "scripts": {
     "start": "node server.js | npm run client",
