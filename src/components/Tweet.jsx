@@ -12,29 +12,11 @@ import Box from '@material-ui/core/Box';
 import Moment from 'react-moment';
 import Chip from '@material-ui/core/Chip';
 import uuidv1 from 'uuid/v1';
+import styles from '../styles/TweetStyle';
 
 Moment.globalFormat = 'YYYY/MM/DD - hh:mm a';
 
-const useStyles = makeStyles({
-    card: {
-        maxWidth: 345,
-    },
-    media: {
-        height: 140,
-    },
-    creationDate: {
-        marginLeft: 0
-    },
-    chipContainer: {
-        display: 'flex',
-        justifyContent: 'center',
-        flexWrap: 'wrap',
-        '& > *': {
-            margin: 4,
-        },
-    },
-});
-
+const useStyles = makeStyles(styles);
 
 const Tweet = ({ content }) => {
     const classes = useStyles();

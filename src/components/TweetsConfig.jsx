@@ -14,36 +14,9 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { makeStyles } from '@material-ui/core/styles';
 import accounts from '../accounts';
+import styles from '../styles/TweetsConfigStyle';
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        padding: theme.spacing(2, 2),
-        margin: '8px'
-    },
-    group: {
-        textAlign: 'center'
-    },
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        width: 120,
-    },
-    formControl: {
-        marginTop: theme.spacing(2),
-        marginBottom: theme.spacing(1),
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        minWidth: 140,
-    },
-    heading: {
-        fontSize: theme.typography.pxToRem(15),
-        fontWeight: theme.typography.fontWeightMedium,
-    },
-    config: {
-        display: 'flex',
-        alignItems: 'center'
-    }
-}));
+const useStyles = makeStyles(styles);
 
 const TweetsConfig = ({ positionHandler, amountHandler }) => {
     const classes = useStyles();

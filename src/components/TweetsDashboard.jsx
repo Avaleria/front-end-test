@@ -9,41 +9,11 @@ import Badge from '@material-ui/core/Badge';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Tweet from './Tweet';
+import styles from '../styles/TweetsDashboardStyles';
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        justifyContent: 'center',
-        padding: theme.spacing(2, 2),
-    },
+const useStyles = makeStyles(styles);
 
-    list: {
-        minWidth: 320,
-        backgroundColor: theme.palette.background.paper,
-        position: 'relative',
-        overflow: 'auto',
-        maxHeight: 700,
-    },
-    listItem: {
-        justifyContent: 'center'
-    },
-    subHeader: {
-        padding: theme.spacing(2, 2),
-    },
-    margin: {
-        margin: theme.spacing(1),
-    },
-    padding: {
-        padding: theme.spacing(0, 2),
-    },
-    account: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        maxWidth: 500
-    }
-}));
-
-
-const TweetsDashboard = ({ tweets }) => {    
+const TweetsDashboard = ({ tweets }) => {
     const classes = useStyles();
     return (
         <Grid container spacing={3} className={classes.root}>
