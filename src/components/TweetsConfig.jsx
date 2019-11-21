@@ -13,6 +13,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { makeStyles } from '@material-ui/core/styles';
+import accounts from '../accounts';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -44,13 +45,11 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const TweetsConfig = ({ accounts, positionHandler }) => {
+const TweetsConfig = ({ positionHandler, amountHandler }) => {
     const classes = useStyles();
-    const [first, setFirst] = React.useState({ name: 'versaagency', amount: 30 });
-    const [second, setSecond] = React.useState({ name: 'rainagency', amount: 30 });
-    const [third, setThird] = React.useState({ name: 'alexadevs', amount: 30 });
-
-
+    const [first, setFirst] = React.useState(accounts[0]);
+    const [second, setSecond] = React.useState(accounts[1]);
+    const [third, setThird] = React.useState(accounts[2]);
     const [labelWidth, setLabelWidth] = React.useState(0);
     const inputLabel = React.useRef(null);
 
@@ -60,50 +59,55 @@ const TweetsConfig = ({ accounts, positionHandler }) => {
 
     const handleAmountChange = index => event => {
         const nextValue = event.target.value
+        let account = {};
         if (index === 0) {
             setFirst({ ...first, amount: nextValue });
+            account = first;
         }
         if (index === 1) {
             setSecond({ ...second, amount: nextValue });
+            account = second;
         }
         if (index === 2) {
             setThird({ ...third, amount: nextValue });
+            account = third;
         }
+        amountHandler(account.id, account.name, index, nextValue);
     }
 
     const handleChange = index => event => {
         const nextValue = event.target.value
         if (index === 0) {
-            if (first.name !== nextValue) {
-                if (second.name === nextValue) {
-                    setSecond({ ...second, name: first.name });
+            if (first.id !== nextValue) {
+                if (second.id === nextValue) {
+                    setSecond({ ...second, id: first.id });
                 } else {
-                    setThird({ ...third, name: first.name });
+                    setThird({ ...third, id: first.id });
                 }
-                setFirst({ ...first, name: event.target.value });
+                setFirst({ ...first, id: event.target.value });
             }
         }
         if (index === 1) {
-            if (second.name !== nextValue) {
-                if (first.name === nextValue) {
-                    setFirst({ ...first, name: second.name });
+            if (second.id !== nextValue) {
+                if (first.id === nextValue) {
+                    setFirst({ ...first, id: second.id });
                 } else {
-                    setThird({ ...third, name: second.name });
+                    setThird({ ...third, id: second.id });
                 }
-                setSecond({ ...second, name: event.target.value });
+                setSecond({ ...second, id: event.target.value });
             }
         }
         if (index === 2) {
-            if (third.name !== nextValue) {
-                if (first.name === nextValue) {
-                    setFirst({ ...first, name: third.name });
+            if (third.id !== nextValue) {
+                if (first.id === nextValue) {
+                    setFirst({ ...first, id: third.id });
                 } else {
-                    setSecond({ ...second, name: third.name });
+                    setSecond({ ...second, id: third.id });
                 }
-                setThird({ ...third, name: event.target.value });
+                setThird({ ...third, id: event.target.value });
             }
         }
-        positionHandler(index, nextValue);
+        positionHandler(nextValue, index);
     };
 
     return (
@@ -125,7 +129,7 @@ const TweetsConfig = ({ accounts, positionHandler }) => {
                             <Select
                                 labelId="demo-simple-select-outlined-label"
                                 id="demo-simple-select-outlined"
-                                value={first.name}
+                                value={first.id}
                                 onChange={handleChange(0)}
                                 labelWidth={labelWidth}>
                                 {accounts.map(acc => <MenuItem value={acc.id} key={acc.id}>{acc.name}</MenuItem>)}
@@ -137,7 +141,7 @@ const TweetsConfig = ({ accounts, positionHandler }) => {
                             <Select
                                 labelId="demo-simple-select-outlined-label"
                                 id="demo-simple-select-outlined"
-                                value={second.name}
+                                value={second.id}
                                 onChange={handleChange(1)}
                                 labelWidth={labelWidth}>
                                 {accounts.map(acc => <MenuItem value={acc.id} key={acc.id}>{acc.name}</MenuItem>)}
@@ -148,7 +152,7 @@ const TweetsConfig = ({ accounts, positionHandler }) => {
                             <Select
                                 labelId="demo-simple-select-outlined-label"
                                 id="demo-simple-select-outlined"
-                                value={third.name}
+                                value={third.id}
                                 onChange={handleChange(2)}
                                 labelWidth={labelWidth}>
                                 {accounts.map(acc => <MenuItem value={acc.id} key={acc.id}>{acc.name}</MenuItem>)}

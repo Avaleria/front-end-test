@@ -3,54 +3,55 @@ import './App.css';
 import TweetsDashboard from './components/TweetsDashboard';
 import TweetsConfig from './components/TweetsConfig';
 import axios from 'axios';
-import mock from './json.js'
+import accounts from './accounts';
 
 function App() {
+
   const [data, setData] = useState([]);
 
-  const accounts = [
-    {
-      id: 'versaagency', name: '@VersaAgency', count: 30
-    },
-    {
-      id: 'rainagency', name: '@RainAgency', count: 30
-    },
-    {
-      id: 'alexadevs', name: '@alexadevs', count: 30
-    }
-  ];
+  const fetchData = (id, count) => {
+    return axios.get(`http://localhost:7890/1.1/statuses/user_timeline.json?count=${count}&screen_name=${id}`);
+  };
 
-  const fetchData = async (account, position) => {
+  const init = async () => {
     try {
-      const { id, name, count } = account;
-      // const response = await axios.get(`http://localhost:7890/1.1/statuses/user_timeline.json?count=${count}&screen_name=${id}`);
-      // data[position] = { tweets: response.data, name };      
-      const thisIsMock = mock;
-      data[position] = { tweets: thisIsMock, name, id };
-    } catch (err) {
+      const versa = await fetchData('versaagency', 30);
+      const rain = await fetchData('rainagency', 30);
+      const alexa = await fetchData('alexadevs', 30);
+      accounts[0].tweets = versa.data;
+      accounts[1].tweets = rain.data;
+      accounts[2].tweets = alexa.data;
+      setData(accounts);
+    }
+    catch (err) {
       console.error(err);
     }
   };
 
   if (data.length === 0) {
-    fetchData(accounts[0], 0);
-    fetchData(accounts[1], 1);
-    fetchData(accounts[2], 2);
+    init();
   }
 
-  const handlePositionChange = (index, id) => {
+  const handlePositionChange = (id, index) => {
     const content = [...data];
     const a = { ...data[index] };
-    const b = data.find(ac => ac.id == id);
+    const b = data.find(ac => ac.id === id);
     const bIndex = data.indexOf(b);
     content[index] = { ...b };
     content[bIndex] = a;
     setData(content);
   };
 
+  const handleAmountChange = async (id, name, index, amount) => {
+    const account = await fetchData(id, amount);
+    const newData = [...data];
+    newData[index] = { tweets: account.data, id, name };
+    setData(newData);
+  };
+
   return (
     <div className="App">
-      <TweetsConfig accounts={accounts} positionHandler={handlePositionChange} />
+      <TweetsConfig positionHandler={handlePositionChange} amountHandler={handleAmountChange} />
       <TweetsDashboard tweets={data} />
     </div>
   );
