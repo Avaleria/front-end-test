@@ -1,5 +1,9 @@
 .App {
   display: flex;
-  flex-flow: column;  
+  flex-flow: column;
 }
 
+.loading {
+  padding-left: 10px;
+  padding-right: 10px;
+}

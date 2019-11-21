@@ -111,6 +111,7 @@ const TweetsConfig = ({ positionHandler, amountHandler }) => {
     };
 
     return (
+        // TODO: make all this generic (reduce the markup)
         <ExpansionPanel className={classes.root}>
             <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -162,6 +163,7 @@ const TweetsConfig = ({ positionHandler, amountHandler }) => {
                     <Grid item xs className={classes.group}>
                         <TextField
                             id="first-number"
+                            type="number"
                             className={classes.textField}
                             label="1st Tweets #"
                             margin="normal"
@@ -171,6 +173,7 @@ const TweetsConfig = ({ positionHandler, amountHandler }) => {
                         />
                         <TextField
                             id="second-number"
+                            type="number"
                             className={classes.textField}
                             label="2nd Tweets #"
                             margin="normal"
@@ -180,6 +183,7 @@ const TweetsConfig = ({ positionHandler, amountHandler }) => {
                         />
                         <TextField
                             id="third-number"
+                            type="number"
                             className={classes.textField}
                             label="3rd Tweets #"
                             margin="normal"
