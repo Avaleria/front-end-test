@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -43,17 +44,52 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const TweetsConfig = () => {
+const TweetsConfig = ({ accounts }) => {
     const classes = useStyles();
-    const [age, setAge] = React.useState('');
-    const inputLabel = React.useRef(null);
+    const [first, setFirst] = React.useState('versaagency');
+    const [second, setSecond] = React.useState('rainagency');
+    const [third, setThird] = React.useState('alexadevs');
+
+
     const [labelWidth, setLabelWidth] = React.useState(0);
+    const inputLabel = React.useRef(null);
+
     React.useEffect(() => {
         setLabelWidth(inputLabel.current.offsetWidth);
     }, []);
 
-    const handleChange = event => {
-        setAge(event.target.value);
+    const handleChange = index => event => {
+        const nextValue = event.target.value
+        if (index === 0) {
+            if (first !== nextValue) {
+                if (second === nextValue) {
+                    setSecond(first);
+                } else {
+                    setThird(first);
+                }
+                setFirst(event.target.value);
+            }
+        }
+        if (index === 1) {
+            if (second !== nextValue) {
+                if (first === nextValue) {
+                    setFirst(second);
+                } else {
+                    setThird(second);
+                }
+                setSecond(event.target.value);
+            }
+        }
+        if (index === 2) {
+            if (third !== nextValue) {
+                if (first === nextValue) {
+                    setFirst(third);
+                } else {
+                    setSecond(third);
+                }
+                setThird(event.target.value);
+            }
+        }
     };
 
     return (
@@ -75,13 +111,11 @@ const TweetsConfig = () => {
                             <Select
                                 labelId="demo-simple-select-outlined-label"
                                 id="demo-simple-select-outlined"
-                                value={age}
-                                onChange={handleChange}
-                                labelWidth={labelWidth}
-                            >
-                                <MenuItem value={10}>@VersaAgency</MenuItem>
-                                <MenuItem value={20}>@RainAgency</MenuItem>
-                                <MenuItem value={30}>@alexadevs</MenuItem>
+                                value={first}
+                                onChange={handleChange(0)}
+                                labelWidth={labelWidth}>
+                                {accounts.map(acc => <MenuItem value={acc.id} key={acc.id}>{acc.name}</MenuItem>)}
+
                             </Select>
                         </FormControl>
                         <FormControl variant="outlined" className={classes.formControl}>
@@ -89,13 +123,10 @@ const TweetsConfig = () => {
                             <Select
                                 labelId="demo-simple-select-outlined-label"
                                 id="demo-simple-select-outlined"
-                                value={age}
-                                onChange={handleChange}
-                                labelWidth={labelWidth}
-                            >
-                                <MenuItem value={10}>@VersaAgency</MenuItem>
-                                <MenuItem value={20}>@RainAgency</MenuItem>
-                                <MenuItem value={30}>@alexadevs</MenuItem>
+                                value={second}
+                                onChange={handleChange(1)}
+                                labelWidth={labelWidth}>
+                                {accounts.map(acc => <MenuItem value={acc.id} key={acc.id}>{acc.name}</MenuItem>)}
                             </Select>
                         </FormControl>
                         <FormControl variant="outlined" className={classes.formControl}>
@@ -103,13 +134,10 @@ const TweetsConfig = () => {
                             <Select
                                 labelId="demo-simple-select-outlined-label"
                                 id="demo-simple-select-outlined"
-                                value={age}
-                                onChange={handleChange}
-                                labelWidth={labelWidth}
-                            >
-                                <MenuItem value={10}>@VersaAgency</MenuItem>
-                                <MenuItem value={20}>@RainAgency</MenuItem>
-                                <MenuItem value={30}>@alexadevs</MenuItem>
+                                value={third}
+                                onChange={handleChange(2)}
+                                labelWidth={labelWidth}>
+                                {accounts.map(acc => <MenuItem value={acc.id} key={acc.id}>{acc.name}</MenuItem>)}
                             </Select>
                         </FormControl>
                     </Grid>
@@ -119,7 +147,7 @@ const TweetsConfig = () => {
                             className={classes.textField}
                             label="1st Tweets #"
                             margin="normal"
-                            variant="outlined"
+                            variant="outlined"                            
                         />
                         <TextField
                             id="second-number"
@@ -142,6 +170,9 @@ const TweetsConfig = () => {
     );
 }
 
+TweetsConfig.propTypes = {
+    accounts: PropTypes.array
+};
 
 
 export default TweetsConfig;

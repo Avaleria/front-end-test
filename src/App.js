@@ -24,8 +24,8 @@ function App() {
     try {
       const { id, name, count } = account;
       // const response = await axios.get(`http://localhost:7890/1.1/statuses/user_timeline.json?count=${count}&screen_name=${id}`);
-      //data[position] = { tweets: response.data, name };      
-      const thisIsMock = mock;      
+      // data[position] = { tweets: response.data, name };      
+      const thisIsMock = mock;
       data[position] = { tweets: thisIsMock, name };
     } catch (err) {
       console.error(err);
@@ -33,12 +33,12 @@ function App() {
   };
 
   fetchData(accounts[0], 0);
-  // fetchData(accounts[1], 1);
-  // fetchData(accounts[2], 2);
+  fetchData(accounts[1], 1);
+  fetchData(accounts[2], 2);
 
   return (
     <div className="App">
-      <TweetsConfig />
+      <TweetsConfig accounts={accounts} />
       <TweetsDashboard tweets={data} />
     </div>
   );
