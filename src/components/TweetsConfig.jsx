@@ -172,7 +172,8 @@ const TweetsConfig = ({ positionHandler, amountHandler }) => {
 }
 
 TweetsConfig.propTypes = {
-    accounts: PropTypes.array
+    positionHandler: PropTypes.func,
+    amountHandler: PropTypes.func
 };
 
 
