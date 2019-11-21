@@ -44,11 +44,11 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const TweetsConfig = ({ accounts }) => {
+const TweetsConfig = ({ accounts, positionHandler }) => {
     const classes = useStyles();
-    const [first, setFirst] = React.useState('versaagency');
-    const [second, setSecond] = React.useState('rainagency');
-    const [third, setThird] = React.useState('alexadevs');
+    const [first, setFirst] = React.useState({ name: 'versaagency', amount: 30 });
+    const [second, setSecond] = React.useState({ name: 'rainagency', amount: 30 });
+    const [third, setThird] = React.useState({ name: 'alexadevs', amount: 30 });
 
 
     const [labelWidth, setLabelWidth] = React.useState(0);
@@ -58,38 +58,52 @@ const TweetsConfig = ({ accounts }) => {
         setLabelWidth(inputLabel.current.offsetWidth);
     }, []);
 
+    const handleAmountChange = index => event => {
+        const nextValue = event.target.value
+        if (index === 0) {
+            setFirst({ ...first, amount: nextValue });
+        }
+        if (index === 1) {
+            setSecond({ ...second, amount: nextValue });
+        }
+        if (index === 2) {
+            setThird({ ...third, amount: nextValue });
+        }
+    }
+
     const handleChange = index => event => {
         const nextValue = event.target.value
         if (index === 0) {
-            if (first !== nextValue) {
-                if (second === nextValue) {
-                    setSecond(first);
+            if (first.name !== nextValue) {
+                if (second.name === nextValue) {
+                    setSecond({ ...second, name: first.name });
                 } else {
-                    setThird(first);
+                    setThird({ ...third, name: first.name });
                 }
-                setFirst(event.target.value);
+                setFirst({ ...first, name: event.target.value });
             }
         }
         if (index === 1) {
-            if (second !== nextValue) {
-                if (first === nextValue) {
-                    setFirst(second);
+            if (second.name !== nextValue) {
+                if (first.name === nextValue) {
+                    setFirst({ ...first, name: second.name });
                 } else {
-                    setThird(second);
+                    setThird({ ...third, name: second.name });
                 }
-                setSecond(event.target.value);
+                setSecond({ ...second, name: event.target.value });
             }
         }
         if (index === 2) {
-            if (third !== nextValue) {
-                if (first === nextValue) {
-                    setFirst(third);
+            if (third.name !== nextValue) {
+                if (first.name === nextValue) {
+                    setFirst({ ...first, name: third.name });
                 } else {
-                    setSecond(third);
+                    setSecond({ ...second, name: third.name });
                 }
-                setThird(event.target.value);
+                setThird({ ...third, name: event.target.value });
             }
         }
+        positionHandler(index, nextValue);
     };
 
     return (
@@ -111,7 +125,7 @@ const TweetsConfig = ({ accounts }) => {
                             <Select
                                 labelId="demo-simple-select-outlined-label"
                                 id="demo-simple-select-outlined"
-                                value={first}
+                                value={first.name}
                                 onChange={handleChange(0)}
                                 labelWidth={labelWidth}>
                                 {accounts.map(acc => <MenuItem value={acc.id} key={acc.id}>{acc.name}</MenuItem>)}
@@ -123,7 +137,7 @@ const TweetsConfig = ({ accounts }) => {
                             <Select
                                 labelId="demo-simple-select-outlined-label"
                                 id="demo-simple-select-outlined"
-                                value={second}
+                                value={second.name}
                                 onChange={handleChange(1)}
                                 labelWidth={labelWidth}>
                                 {accounts.map(acc => <MenuItem value={acc.id} key={acc.id}>{acc.name}</MenuItem>)}
@@ -134,7 +148,7 @@ const TweetsConfig = ({ accounts }) => {
                             <Select
                                 labelId="demo-simple-select-outlined-label"
                                 id="demo-simple-select-outlined"
-                                value={third}
+                                value={third.name}
                                 onChange={handleChange(2)}
                                 labelWidth={labelWidth}>
                                 {accounts.map(acc => <MenuItem value={acc.id} key={acc.id}>{acc.name}</MenuItem>)}
@@ -147,7 +161,9 @@ const TweetsConfig = ({ accounts }) => {
                             className={classes.textField}
                             label="1st Tweets #"
                             margin="normal"
-                            variant="outlined"                            
+                            variant="outlined"
+                            value={first.amount}
+                            onChange={handleAmountChange(0)}
                         />
                         <TextField
                             id="second-number"
@@ -155,6 +171,8 @@ const TweetsConfig = ({ accounts }) => {
                             label="2nd Tweets #"
                             margin="normal"
                             variant="outlined"
+                            value={second.amount}
+                            onChange={handleAmountChange(1)}
                         />
                         <TextField
                             id="third-number"
@@ -162,6 +180,8 @@ const TweetsConfig = ({ accounts }) => {
                             label="3rd Tweets #"
                             margin="normal"
                             variant="outlined"
+                            value={third.amount}
+                            onChange={handleAmountChange(2)}
                         />
                     </Grid>
                 </Grid>
